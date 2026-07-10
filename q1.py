@@ -2,55 +2,55 @@ import threading
 from collections import Counter
 import time
 
-# Constantes
-N = 10  # Top N palavras mais comuns
-T = 4   # Número de threads
+# Constants
+N = 10  # Top N most common words
+T = 4   # Number of threads
 
-# Função para contar palavras em um segmento do texto
-def contar_palavras_segmento(segmento, contador_local):
-    palavras = segmento.split()
-    contador_local.update(palavras)
+# Function to count words in a text segment
+def count_words_segment(segment, local_counter):
+    words = segment.split()
+    local_counter.update(words)
 
-def dividir_texto(texto, partes):
-    tamanho = len(texto)
-    segmento_len = tamanho // partes
-    return [texto[i*segmento_len:(i+1)*segmento_len] for i in range(partes - 1)] + [texto[(partes-1)*segmento_len:]]
+def split_text(text, parts):
+    size = len(text)
+    segment_len = size // parts
+    return [text[i*segment_len:(i+1)*segment_len] for i in range(parts - 1)] + [text[(parts-1)*segment_len:]]
 
 def main():
-    inicio = time.time()
+    start = time.time()
 
-    # Leitura do arquivo
+    # Reading the file
     with open("texto.txt", "r", encoding="utf-8") as f:
-        texto = f.read().lower()
+        text = f.read().lower()
 
-    segmentos = dividir_texto(texto, T)
+    segments = split_text(text, T)
 
     threads = []
-    contadores = [Counter() for _ in range(T)]
+    accountants = [Counter() for _ in range(T)]
 
-    # Criar e iniciar as threads
+    # Create and start the threads
     for i in range(T):
-        thread = threading.Thread(target=contar_palavras_segmento, args=(segmentos[i], contadores[i]))
+        thread = threading.Thread(target=count_words_segment, args=(segments[i], accountants[i]))
         threads.append(thread)
         thread.start()
 
-    # Esperar todas as threads terminarem
+    # Wait for all threads to finish.
     for thread in threads:
         thread.join()
 
-    # Combinar os resultados
-    contador_total = Counter()
-    for c in contadores:
-        contador_total.update(c)
+    # Combine the results
+    total_counter = Counter()
+    for c in accountants:
+        total_counter.update(c)
 
-    # Imprimir as N palavras mais comuns
-    print(f"\nTop {N} palavras mais frequentes:")
-    for palavra, freq in contador_total.most_common(N):
-        print(f"{palavra}: {freq}")
+    # Print the N most common words
+    print(f"\nTop {N} most frequent words:")
+    for word, freq in total_counter.most_common(N):
+        print(f"{word}: {freq}")
 
-    fim = time.time()
-    duracao = fim - inicio
-    print(f"\nDuração do programa: {duracao:.2f} segundos")
+    end = time.time()
+    Duracao = end - start
+    print(f"\nProgram duration: {Duracao:.2f} seconds")
 
 if __name__ == "__main__":
     main()

@@ -1,46 +1,46 @@
 import threading
 
-# A senha correta
-senha_correta = "0000000123"
+# The correct password
+correct_password = "0000000123"
 
-# Número de threads
+# Number of threads
 NUM_THREADS = 4
 
-# Variável global para indicar se a senha já foi encontrada
-encontrada = False
+# Global variable to indicate whether the password has already been found
+found = False
 
-# Lock para proteger acesso à variável 'encontrada'
+# Lock to protect access to the variable 'found'
 lock = threading.Lock()
 
-def trabalhador(id, inicio, fim):
-    global encontrada
-    for i in range(inicio, fim):
+def worker(id, start, end):
+    global found
+    for i in range(start, end):
         with lock:
-            if encontrada:
-                break  # Outra thread já encontrou a senha
+            if found:
+                break  # Another thread has already found the password.
 
-        tentativa = f"{i:010d}"  # Formata o número com 10 dígitos, zeros à esquerda
+        attempt = f"{i:010d}"  # Formats the number with 10 digits, with leading zeros.
 
-        if tentativa == senha_correta:
+        if attempt == correct_password:
             with lock:
-                encontrada = True  # Marca como encontrada
-                print(f"Senha encontrada: {tentativa} pela thread #{id}")
+                found = True  # Mark as found
+                print(f"Password found: {attempt} pela thread #{id}")
             break
 
 def main():
-    total_senhas = 10**10
-    senhas_por_thread = total_senhas // NUM_THREADS
+    total_passwords = 10**10
+    passwords_per_thread = total_passwords // NUM_THREADS
     threads = []
 
     for i in range(NUM_THREADS):
-        inicio = i * senhas_por_thread
-        fim = total_senhas if i == NUM_THREADS - 1 else (i + 1) * senhas_por_thread
-        t = threading.Thread(target=trabalhador, args=(i, inicio, fim))
+        start = i * passwords_per_thread
+        end = total_passwords if i == NUM_THREADS - 1 else (i + 1) * passwords_per_thread
+        t = threading.Thread(target=worker, args=(i, start, end))
         threads.append(t)
         t.start()
 
     for t in threads:
-        t.join()  # Espera todas as threads terminarem
+        t.join() #wait for all threads to finish
 
 if __name__ == "__main__":
     main()
