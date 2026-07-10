@@ -1,15 +1,15 @@
-# Estudos de Sistemas Operacionais 
+Operating Systems Studies
+This repository gathers implementations and experiments related to the study of Operating Systems.
+The goal is to understand fundamental concepts such as processes, concurrency, and threads, applying them in small systems developed in Python.
+About the Project
+This project was created as part of a hands-on study in Operating Systems.
+Here, I explore how to create and manage threads, simulating the execution of multiple concurrent tasks within a system.
+This type of implementation helps solidify concepts of scheduling, synchronization, and inter-process communication, which are fundamental to understanding how modern systems work internally.
+Technologies Used
 
-Este repositório reúne implementações e experimentos relacionados ao estudo de **Sistemas Operacionais**.  
-O objetivo é compreender conceitos fundamentais como **processos, concorrência e threads**, aplicando-os em pequenos sistemas desenvolvidos em **Python**.
+Python 3.x — main language
+threading — thread creation and management
+time — wait simulation and timing
 
-## Sobre o Projeto
-O projeto foi criado como parte de um estudo prático em Sistemas Operacionais.  
-Aqui, exploro como criar e gerenciar threads, simulando a execução de múltiplas tarefas concorrentes dentro de um sistema.
-
-Esse tipo de implementação ajuda a fixar conceitos de **escalonamento, sincronização e comunicação entre processos**, fundamentais para compreender o funcionamento interno de sistemas modernos.
-
-##  Tecnologias Utilizadas
-- **Python 3.x** — linguagem principal  
-- **threading** — criação e gerenciamento de threads  
-- **time** — simulação de espera e temporização  
+Credits
+Original project by Thulio05. This repository is a fork used for translated/adapted study purposes.
